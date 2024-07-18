@@ -1,0 +1,26 @@
+story,kendall's tau
+Inhouse Interestingness Average,0.7173467
+Inhouse Creativity Average,0.6439757
+Crowdsource Interestingness Average,0.6093819
+Crowdsource Creativity Average,0.3890784
+Total Interestingness Average,1
+Total Creativity Average,0.6662275
+Deltascore(Typo),0.01687195
+Deltascore(Jumble),0.0110317
+Deltascore(Add_negation),0.17585765
+UNIEVAL,0.12718856
+CTC,0.1466562
+GPTscore_Interestingness,0.3413251
+GPTscore_Creativity,0.3100324
+StoryER,0.1135612
+Deltascore(Engaging Plot transformed),0.12653964
+Deltascore(Irony_Transformed),0.31537571
+Deltascore(Metaphor and Simile Transformed),0.14341159
+Deltascore(Pun Transformed),0.12329503
+Deltascore(Sensory Description Transformed),0.0551583
+Deltascore(Vivid Writing Style),0.18818715
+Meta-Llama-3-70B-Instruct_Icscore,0.3030462
+Meta-Llama-3-8B-Instruct_Icscore,0.29266346
+Mistral-7B-v0.1_Icscore,0.35171529
+Mixtral-8x7B-v0.1_Icscore,0.38351243
+gemma-7b_Icscore,0.30953541
