@@ -48,6 +48,17 @@ with open('./datas/transformations.jsonl', 'r', encoding='utf-8') as file:
 with open('./datas/rocStories.jsonl', 'r', encoding='utf-8') as file:
     story_final = [json.loads(line) for line in file if line.strip()]
 
+# Shuffle and split the data into validation and weight tuning sets
+split_data = story_final.copy()
+random.shuffle(split_data)
+validation_set = split_data[:20]
+weight_tuning_set = split_data[20:]
+
+# Ensure directories exist
+os.makedirs('./datas/transformed_data', exist_ok=True)
+os.makedirs('./datas/validation_set', exist_ok=True)
+os.makedirs('./datas/weight_tuning_set', exist_ok=True)
+
 # Process each transformation and story
 for transformation in transformations:
     transformation_name = transformation["Transformation"]
@@ -56,41 +67,38 @@ for transformation in transformations:
 
     transformed_stories = []
 
-    for i, entry in enumerate(story_final):
+    for entry in story_final:
         story = entry["story"]
 
-        # First transformation
-        new_stories = []
-        new_interesting = transform_story(story, transformation_name, original_example, transformed_example)
-        new_stories.append(new_interesting)
+        # Transform the story
+        transformed_story = transform_story(story, transformation_name, original_example, transformed_example)
         
         # Collect the transformed story
         new_entry = {
             "story": story,
-            "transformed_story": new_interesting,
+            "transformed_story": transformed_story,
         }
         
         transformed_stories.append(new_entry)
 
-    # Write all transformed stories to the main file
+    # Write all transformed stories to the main file in the original order
     with open(f'./datas/transformed_data/{transformation_name}_transformed_stories.jsonl', 'w', encoding='utf-8') as file:
         for story in transformed_stories:
             json.dump(story, file, ensure_ascii=False)
             file.write('\n')
 
-    # Shuffle and split the data into validation and weight tuning sets
-    random.shuffle(transformed_stories)
-    validation_set = transformed_stories[:20]
-    weight_tuning_set = transformed_stories[20:]
+    # Create validation and weight tuning sets from the transformed stories based on split_data order
+    transformed_validation_set = [next(story for story in transformed_stories if story["story"] == v["story"]) for v in validation_set]
+    transformed_weight_tuning_set = [next(story for story in transformed_stories if story["story"] == w["story"]) for w in weight_tuning_set]
 
     # Write validation set
     with open(f'./datas/validation_set/{transformation_name}_transformed_stories.jsonl', 'w', encoding='utf-8') as file:
-        for story in validation_set:
+        for story in transformed_validation_set:
             json.dump(story, file, ensure_ascii=False)
             file.write('\n')
 
     # Write weight tuning set
     with open(f'./datas/weight_tuning_set/{transformation_name}_transformed_stories.jsonl', 'w', encoding='utf-8') as file:
-        for story in weight_tuning_set:
+        for story in transformed_weight_tuning_set:
             json.dump(story, file, ensure_ascii=False)
             file.write('\n')
