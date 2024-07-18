@@ -1,9 +1,13 @@
 # ICScore: a Metric for Evaluating Interestingness and Creativity of Stories
 
 This repo contains code for ICScore: a Metric for Evaluating Interestingness and Creativity of Stories.
-
+# Example of Transformation
 ![transformation_img](./asset/transformation.png)
+When one of the factors of interest, ‘Irony’, is applied to less interesting stories(top), a significant change occurs, resulting in a large difference in likelihood, while highly interesting stories(bottom) show little change, resulting in a small difference in likelihood. Generative likelihood for original/transformed story is in yellow/orange circle, and the DeltaScore value is in green circle.
+
+# Result
 ![result_img](./asset/result.png)
+The chart compares the absolute value of Kendall correlation (|$\tau$|) between various metrics and human evaluation. ICScore is represented by red bars. DeltaScores with transformations are represented by green bars. DeltaScore with perturbations are represented by purple bars, while other metrics are in blue.
 
 ### Preparation
 First, download the requirements.txt file.
